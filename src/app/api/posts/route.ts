@@ -8,7 +8,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    console.log(data)
+  console.log(data)
   const req = await request.json();
   await prisma.post.create({ data: req });
   return NextResponse.json(req);

@@ -1,6 +1,7 @@
 
 'use client'
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function AddPost() {
   const [title, setTitle] = useState < string > ('');
@@ -8,18 +9,32 @@ export default function AddPost() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
+    const router = useRouter();
+
     event.preventDefault();
-    console.log(event)
-    await fetch('http://localhost:3000/api/posts/', {
+    const data = JSON.stringify({ title, content })
+    console.log(data)
+    
+    await fetch('http://localhost:3000/api/posts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title, content }),
     });
-
+    /*
+    await fetch('https://3000-nattomillin-nextjstemp-dd316a2e4zl.ws-us100.gitpod.io/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title, content }),
+    });
+    */
     setTitle('');
     setContent('');
+
+    router.refresh();
   };
 
   return (
